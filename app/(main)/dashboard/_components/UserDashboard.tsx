@@ -12,6 +12,7 @@ interface UserDashboardProps {}
 
 const UserDashboard = async ({}: UserDashboardProps) => {
   const session = await auth();
+
   const user = await db.user.findUnique({
     where: {
       id: session?.user?.id,
@@ -21,6 +22,18 @@ const UserDashboard = async ({}: UserDashboardProps) => {
       socialLinks: true,
     },
   });
+
+  const coursesInfo = await db.course.findMany({
+    where: {
+      OR:user?.courses.map((course)=>{
+        return {
+          id:{
+            equals:course.courseId
+          }
+        }
+      })
+    }
+  })
 
   if (!user) {
     return null;

@@ -1,10 +1,10 @@
 import { port } from "@/lib/font";
 import { cn } from "@/lib/utils";
-import { Course } from "@prisma/client";
+import { CourseNameAndStudentData } from "@/types/types";
 import Link from "next/link";
 
 interface UserCoursesProps {
-  courses: Course[];
+  courses: CourseNameAndStudentData[];
 }
 
 const UserCourses = ({ courses }: UserCoursesProps) => {
@@ -25,14 +25,14 @@ const UserCourses = ({ courses }: UserCoursesProps) => {
         )}
       >
         {courses.map((course) => {
-          if (course.completionStatus === "ONGOING") {
+          if (course.studentData.completionStatus === "ONGOING") {
             return (
               <li
-                key={course.id}
+                key={course.studentData.id}
                 className="flex aspect-[21/9] flex-col justify-center gap-1.5 rounded-xl bg-[#1e1e1e] px-4 py-2.5"
               >
                 <Link
-                  href={`/course/${course.id}`}
+                  href={`/course/${course.studentData.id}`}
                   className="text-2xl font-semibold text-white"
                 >
                   {course.courseCode}
@@ -64,14 +64,14 @@ const UserCourses = ({ courses }: UserCoursesProps) => {
         )}
       >
         {courses.map((course) => {
-          if (course.completionStatus === "COMPLETED") {
+          if (course.studentData.completionStatus === "COMPLETED") {
             return (
               <li
-                key={course.id}
+                key={course.studentData.id}
                 className="flex aspect-[21/9] flex-col justify-center gap-1.5 rounded-xl bg-[#1e1e1e] px-4 py-2.5"
               >
                 <Link
-                  href={`/course/${course.id}`}
+                  href={`/course/${course.studentData.id}`}
                   className="text-2xl font-semibold text-white"
                 >
                   {course.courseCode}

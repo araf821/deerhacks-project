@@ -11,15 +11,15 @@ datasource db {
 }
 
 model User {
-  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                 String                @id @default(auto()) @map("_id") @db.ObjectId
   name               String
   imageUrl           String
-  email              String   @unique
+  email              String                @unique
   password           String
   school             String
   bio                String?
   socialLinks        Social[]
-  courses            Course[]
+  courses            StudentCourseStatus[]
   currentAvailStatus Status?
 }
 
@@ -32,13 +32,9 @@ enum USER_AVAILABILITY_TYPE {
   LOOKING_FOR_HELP_ONLINE
 }
 
-model Status {
-  id                 String                 @id @default(auto()) @map("_id") @db.ObjectId
+type Status {
   userAvaibilityType USER_AVAILABILITY_TYPE
-  userId             String                 @unique @db.ObjectId
-  msg                String
-  courses            Course[]
-  user               User                   @relation(fields: [userId], references: [id])
+  msg                String?
 }
 
 model Social {
@@ -67,18 +63,23 @@ enum STUDENT_TYPE {
   LEARNER
 }
 
-model Course {
+model StudentCourseStatus {
   id               String            @id @default(auto()) @map("_id") @db.ObjectId
-  name             String
-  courseCode       String
   completionStatus COMPLETION_STATUS
   grade            GRADE?
   type             STUDENT_TYPE      @default(LEARNER)
+  course           Course            @relation(fields: [courseId], references: [id])
+  student          User              @relation(fields: [userId], references: [id])
+  userId           String            @db.ObjectId
+  courseId         String            @db.ObjectId
+}
 
-  student  User    @relation(fields: [userId], references: [id])
-  userId   String  @db.ObjectId
-  Status   Status? @relation(fields: [statusId], references: [id])
-  statusId String? @db.ObjectId
+model Course {
+  id                  String                @id @default(auto()) @map("_id") @db.ObjectId
+  school              String
+  name                String
+  courseCode          String
+  StudentCourseStatus StudentCourseStatus[]
 }
 
 // model Review {
