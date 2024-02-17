@@ -15,4 +15,33 @@ model User {
   name     String
   imageUrl String
   email    String @unique
+  school   String
+  contactInfo String
+  bio String
+  pastCourses Course[]
+  currentCourses Course[]
+  lookingForStudyHelpCourses Course[]
+  helpingWithCourses Course[]
+  averageRating Int 
+  currentStatus Status //Null to indicate that user is not available rn. Otherwise it indicates whether they're looking for help and for what course.
+}
+
+model Status {
+  course Course
+  type String //either "looking for help" or "open to helping"
+}
+
+model Course {
+  name   String
+  school String
+  year   Second
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model Review {
+  reviewer User
+  reviewee User
+  reviewText String
+  ratingNum Int
+  course Course
 }
