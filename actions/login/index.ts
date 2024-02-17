@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { LoginSchema } from "./schema";
 
-import { db } from "@/lib/db";
 import { signIn } from "next-auth/react";
+import { AuthError } from "next-auth";
+import { getUserByEmail } from "@/lib/data/user";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -15,11 +16,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   const { email, password } = validatedFields.data;
 
-  const existingUser = await db.user.findUnique({
-    where: {
-      email,
-    },
-  });
+  const existingUser = await getUserByEmail(email);
 
   if (!existingUser) {
     return {
@@ -34,8 +31,17 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       redirectTo: "/",
     });
   } catch (error) {
-    return {
-      error: "Could not log you in at this time. Please try again later.",
-    };
+    if (error instanceof AuthError) {
+      if (error.type === "CredentialsSignin") {
+        return {
+          error: "Invalid email or password.",
+        };
+      }
+      return {
+        error: "Could not log you in at this time. Please try again later.",
+      };
+    }
+
+    throw error;
   }
 };

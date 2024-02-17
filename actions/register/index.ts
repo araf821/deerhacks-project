@@ -34,4 +34,6 @@ export const login = async (
       imageUrl,
     },
   });
+
+  return { success: "Account created! Please log in." };
 };
