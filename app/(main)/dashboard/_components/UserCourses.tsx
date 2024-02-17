@@ -82,7 +82,7 @@ const UserCourses = ({ courses }: UserCoursesProps) => {
           }
         })}
         <li>
-          <button className="flex aspect-[21/9] h-full w-full flex-col items-center justify-center gap-1.5 rounded-xl bg-[#1e1e1e] px-4 py-2.5 text-2xl text-zinc-400 transition-colors hover:text-white">
+          <button className="flex aspect-[21/9] h-full w-full shrink-0 flex-col items-center justify-center gap-1.5 rounded-xl bg-[#1e1e1e] px-4 py-2.5 text-2xl text-zinc-400 transition-colors hover:text-white">
             Add Course
           </button>
         </li>

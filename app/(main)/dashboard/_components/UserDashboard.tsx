@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import UserCourses from "./UserCourses";
+import AddSocialLink from "@/components/modals/AddSocialLink";
+import { ExternalLink } from "lucide-react";
 
 interface UserDashboardProps {}
 
@@ -26,7 +28,7 @@ const UserDashboard = async ({}: UserDashboardProps) => {
 
   return (
     <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-8 md:grid-cols-3 md:gap-8 lg:gap-12">
-      <div className="col-span-1 space-y-4">
+      <div className="col-span-1 shrink-0 space-y-4">
         <div className="rounded-xl bg-[#1e1e1e] px-4 py-6 md:px-6 md:py-10">
           <div className="relative mx-auto aspect-square w-32 rounded-full border-2 border-white">
             <Image
@@ -72,18 +74,22 @@ const UserDashboard = async ({}: UserDashboardProps) => {
             {user.socialLinks.map((item) => (
               <li key={item.id}>
                 <Link
-                  className="flex w-full items-center justify-between gap-4 rounded-xl bg-zinc-800 px-3 py-2 text-lg text-zinc-400 md:text-xl"
+                  className="flex w-full items-center justify-between gap-4 rounded-xl bg-zinc-800 px-3 py-2 text-lg text-zinc-400 transition-colors hover:text-white md:text-xl"
                   href={item.link}
+                  target="_blank"
                 >
                   {item.label}
+                  <ExternalLink className="h-5 w-5" />
                 </Link>
               </li>
             ))}
             <li>
-              <button className="flex w-full items-center justify-between gap-4 rounded-xl bg-zinc-800 px-3 py-2 text-lg text-zinc-400 md:text-xl">
-                Add
-                <span>+</span>
-              </button>
+              <AddSocialLink>
+                <button className="flex w-full items-center justify-between gap-4 rounded-xl bg-zinc-800 px-3 py-2 text-lg text-zinc-400 transition-colors hover:text-white md:text-xl">
+                  Add
+                  <span>+</span>
+                </button>
+              </AddSocialLink>
             </li>
           </ul>
         </div>
