@@ -11,9 +11,52 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  imageUrl String
-  email    String @unique
-  password String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  imageUrl      String
+  email         String   @unique
+  password      String
+  school        String
+  contactInfo   String
+  bio           String
+  courses       Course[]
+  averageRating Int
 }
+
+enum COMPLETION_STATUS {
+  ONGOING
+  COMPLETED
+}
+
+enum GRADE {
+  A
+  B
+  C
+  D
+  F
+}
+
+enum STUDENT_TYPE {
+  TEACHER
+  LEARNER
+}
+
+model Course {
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  completionStatus COMPLETION_STATUS
+  grade            GRADE
+  type             STUDENT_TYPE      @default(LEARNER)
+
+  student User   @relation(fields: [userId], references: [id])
+  userId  String @db.ObjectId
+}
+
+// model Review {
+//   reviewer   User   @relation(fields: [userId], references: [id])
+//   reviewee   User   @relation(fields: [userId], references: [id])
+//   reviewText String
+//   ratingNum  Int
+//   course     Course @relation(fields: [courseId], references: [id])
+//   courseId   String @db.ObjectId
+// }
