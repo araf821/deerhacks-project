@@ -27,6 +27,11 @@ export const {
     signIn: "/auth/login",
     error: "/auth/error",
   },
+  callbacks: {
+    async signIn() {
+      return true;
+    },
+  },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   ...authConfig,

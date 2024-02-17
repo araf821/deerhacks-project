@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 interface CardWrapperProps {
   children: React.ReactNode;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
 }
 
 const CardWrapper = ({ children, size = "md" }: CardWrapperProps) => {
@@ -13,6 +13,7 @@ const CardWrapper = ({ children, size = "md" }: CardWrapperProps) => {
         {
           "max-w-sm": size === "sm",
           "max-w-lg": size === "lg",
+          "max-w-xl": size === "xl",
         },
       )}
     >

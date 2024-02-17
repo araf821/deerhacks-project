@@ -22,7 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("flex min-h-[100dvh]", poppins.className)}>
-        <Toaster richColors theme="dark" position="bottom-center" />
+        <Toaster
+          richColors
+          theme="dark"
+          position="bottom-center"
+          duration={2500}
+        />
         <div className="flex-1">{children}</div>
       </body>
     </html>

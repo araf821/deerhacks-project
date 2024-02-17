@@ -1,13 +1,13 @@
+"use server";
+
 import { z } from "zod";
 import { RegisterSchema } from "./schema";
 
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
+import { getUserByEmail } from "@/lib/data/user";
 
-export const login = async (
-  values: z.infer<typeof RegisterSchema>,
-  university: string,
-) => {
+export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -16,12 +16,18 @@ export const login = async (
     };
   }
 
-  const { name, email, password, imageUrl } = validatedFields.data;
+  const { name, email, password, imageUrl, university } = validatedFields.data;
 
-  if (!email.endsWith(university)) {
+  if (!email.includes(university)) {
     return {
       error: "Please proceed with your university email.",
     };
+  }
+
+  const existingUser = await getUserByEmail(email);
+
+  if (existingUser) {
+    return { error: "Email is already in use." };
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);

@@ -13,7 +13,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import CardWrapper from "../CardWrapper";
-import { BookMarked, Bookmark } from "lucide-react";
+import { BookMarked } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import AuthFooter from "./AuthFooter";
@@ -66,6 +66,7 @@ const LoginForm = ({}: LoginFormProps) => {
                 <FormControl>
                   <Input
                     {...field}
+                    disabled={isPending}
                     type="email"
                     placeholder="username@university.ca"
                   />
@@ -81,14 +82,21 @@ const LoginForm = ({}: LoginFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input {...field} type="password" placeholder="******" />
+                  <Input
+                    {...field}
+                    disabled={isPending}
+                    type="password"
+                    placeholder="******"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button className="w-full">LET ME IN</Button>
+          <Button className="w-full" disabled={isPending}>
+            LET ME IN
+          </Button>
         </form>
       </Form>
 
