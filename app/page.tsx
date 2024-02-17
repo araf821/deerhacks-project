@@ -3,10 +3,7 @@ import { currentUser } from "@/lib/data/user";
 
 export default async function Home() {
   const user = await currentUser();
-  return (
-
-    <button>{title}</button>
-    
+  return (    
     <main>
       {user?.name || "No user"}
       <LogoutButton />
