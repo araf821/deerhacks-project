@@ -41,8 +41,6 @@ const RegisterForm = () => {
     },
   });
   const imageUrl = form.watch("imageUrl");
-  console.log(imageUrl);
-
   const clearImage = () => {
     form.setValue("imageUrl", "");
   };
