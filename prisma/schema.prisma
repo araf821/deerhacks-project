@@ -19,8 +19,17 @@ model User {
   school   String
   bio      String?
 
-  socialLinks String[]
+  socialLinks Social[]
   courses     Course[]
+}
+
+model Social {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  label String
+  link  String
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 enum COMPLETION_STATUS {
@@ -44,6 +53,7 @@ enum STUDENT_TYPE {
 model Course {
   id               String            @id @default(auto()) @map("_id") @db.ObjectId
   name             String
+  courseCode       String
   completionStatus COMPLETION_STATUS
   grade            GRADE?
   type             STUDENT_TYPE      @default(LEARNER)
