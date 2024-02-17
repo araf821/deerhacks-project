@@ -34,7 +34,7 @@ const LoginForm = ({}: LoginFormProps) => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(async () => {
       await login(values).then((data) => {
         if (data?.error) {
