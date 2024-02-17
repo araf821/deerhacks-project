@@ -8,12 +8,17 @@ import { Loader2, Upload } from "lucide-react";
 import { FormItem } from "./ui/form";
 import { cn } from "@/lib/utils";
 
-interface FileUploadProps {
+interface UploadProfilePictureProps {
   field: any;
   error: boolean;
+  setImage: (fileUrl: string) => void;
 }
 
-const FileUpload = ({ field, error }: FileUploadProps) => {
+const UploadProfilePicture = ({
+  field,
+  error,
+  setImage,
+}: UploadProfilePictureProps) => {
   const [isPending, startTransition] = useTransition();
 
   const { getInputProps, getRootProps } = useDropzone({
@@ -31,7 +36,7 @@ const FileUpload = ({ field, error }: FileUploadProps) => {
         startTransition(async () => {
           const data = await uploadToS3(file);
           const fileUrl = await getS3Url(data.file_key);
-          //   form.setValue("imageUrl", fileUrl);
+          setImage(fileUrl);
         });
 
         toast.success("Uploaded file successfully!");
@@ -46,11 +51,11 @@ const FileUpload = ({ field, error }: FileUploadProps) => {
     <FormItem
       {...getRootProps({
         className:
-          "p-4 my-4 space-y-0 border-2 border-dashed aspect-square w-40 mx-auto text-center gap-2 flex flex-col items-center justify-center rounded-full bg-secondary hover:brightness-90 transition duration-300 dark:hover:brightness-110 dark:bg-zinc-800 cursor-pointer",
+          "p-4 my-4 space-y-0 border-2 border-dashed aspect-square w-40 mx-auto text-center gap-2 flex flex-col items-center justify-center rounded-full bg-transparent hover:brightness-75 transition duration-300 cursor-pointer",
       })}
     >
       {isPending ? (
-        <Loader2 className="h-5 w-5 animate-spin text-primary" />
+        <Loader2 className="h-5 w-5 animate-spin text-white" />
       ) : (
         <>
           <input {...field} {...getInputProps()} />
@@ -72,4 +77,4 @@ const FileUpload = ({ field, error }: FileUploadProps) => {
   );
 };
 
-export default FileUpload;
+export default UploadProfilePicture;
