@@ -1,17 +1,16 @@
-import { signOut } from "@/auth";
+"use client";
 
-interface LogoutButtonProps {}
+import { signOut } from "next-auth/react";
 
-const LogoutButton = ({}: LogoutButtonProps) => {
+interface LogoutButtonProps {
+  className?: string;
+}
+
+const LogoutButton = ({ className }: LogoutButtonProps) => {
   return (
-    <form
-      action={async () => {
-        "use server";
-        await signOut();
-      }}
-    >
-      <button>Logout</button>
-    </form>
+    <button onClick={() => signOut()} className={className}>
+      Logout
+    </button>
   );
 };
 
