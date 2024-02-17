@@ -11,16 +11,16 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  imageUrl      String
-  email         String   @unique
-  password      String
-  school        String
-  contactInfo   String
-  bio           String
-  courses       Course[]
-  averageRating Int
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  imageUrl String
+  email    String  @unique
+  password String
+  school   String
+  bio      String?
+
+  socialLinks String[]
+  courses     Course[]
 }
 
 enum COMPLETION_STATUS {
@@ -45,7 +45,7 @@ model Course {
   id               String            @id @default(auto()) @map("_id") @db.ObjectId
   name             String
   completionStatus COMPLETION_STATUS
-  grade            GRADE
+  grade            GRADE?
   type             STUDENT_TYPE      @default(LEARNER)
 
   student User   @relation(fields: [userId], references: [id])
@@ -53,8 +53,8 @@ model Course {
 }
 
 // model Review {
-//   reviewer   User   @relation(fields: [userId], references: [id])
-//   reviewee   User   @relation(fields: [userId], references: [id])
+//   student    User   @relation(fields: [userId], references: [id])
+//   teacher    User   @relation(fields: [userId], references: [id])
 //   reviewText String
 //   ratingNum  Int
 //   course     Course @relation(fields: [courseId], references: [id])

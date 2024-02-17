@@ -26,8 +26,10 @@ import Image from "next/image";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { universities } from "@/lib/data/constants";
 import { register } from "@/actions/register";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
@@ -51,6 +53,12 @@ const RegisterForm = () => {
         if (data?.error) {
           toast.error(data.error);
         }
+
+        if (data.success) {
+          toast.success(data.success);
+        }
+
+        router.push("/auth/login");
       });
     });
   };
@@ -96,6 +104,7 @@ const RegisterForm = () => {
                 <UploadProfilePicture
                   setImage={(url) => form.setValue("imageUrl", url)}
                   field={field}
+                  disabled={isPending}
                   error={!!form.formState.errors.imageUrl?.message}
                 />
               )}
@@ -110,7 +119,11 @@ const RegisterForm = () => {
                 <FormItem className="">
                   <FormLabel className="text-zinc-100">Name</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Full Name" />
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="Full Name"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -126,6 +139,7 @@ const RegisterForm = () => {
                     <Input
                       {...field}
                       type="email"
+                      disabled={isPending}
                       placeholder="username@university.ca"
                     />
                   </FormControl>
@@ -143,7 +157,12 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel className="text-zinc-100">Password</FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" placeholder="******" />
+                    <Input
+                      {...field}
+                      type="password"
+                      disabled={isPending}
+                      placeholder="******"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -161,7 +180,10 @@ const RegisterForm = () => {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="justify-normal gap-1">
+                      <SelectTrigger
+                        className="justify-normal gap-1"
+                        disabled={isPending}
+                      >
                         {field.value && (
                           <span className="text-zinc-400">identifier: </span>
                         )}
@@ -182,7 +204,9 @@ const RegisterForm = () => {
             />
           </div>
 
-          <Button className="w-full">Register</Button>
+          <Button className="w-full" disabled={isPending}>
+            Register
+          </Button>
         </form>
       </Form>
 

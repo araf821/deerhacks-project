@@ -6,6 +6,7 @@ import { RegisterSchema } from "./schema";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/lib/data/user";
+import { universities } from "@/lib/data/constants";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -38,6 +39,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       name,
       password: hashedPassword,
       imageUrl,
+      school:
+        universities.find((uni) => uni.code === university)?.name || "N/A",
     },
   });
 

@@ -12,12 +12,14 @@ interface UploadProfilePictureProps {
   field: any;
   error: boolean;
   setImage: (fileUrl: string) => void;
+  disabled: boolean;
 }
 
 const UploadProfilePicture = ({
   field,
   error,
   setImage,
+  disabled,
 }: UploadProfilePictureProps) => {
   const [isPending, startTransition] = useTransition();
 
@@ -58,7 +60,7 @@ const UploadProfilePicture = ({
         <Loader2 className="h-5 w-5 animate-spin text-white" />
       ) : (
         <>
-          <input {...field} {...getInputProps()} />
+          <input {...field} disabled={disabled} {...getInputProps()} />
           <Upload
             className={cn("text-muted", {
               "text-destructive": error,
