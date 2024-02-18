@@ -1,7 +1,9 @@
 import CourseList from "@/components/CourseList";
+import Loader from "@/components/Loader";
 import { port } from "@/lib/font";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { Suspense } from "react";
 
 const CoursesPage = () => {
   return (
@@ -27,7 +29,9 @@ const CoursesPage = () => {
         </div>
       </div>
 
-      <CourseList />
+      <Suspense fallback={<Loader />}>
+        <CourseList />
+      </Suspense>
     </div>
   );
 };

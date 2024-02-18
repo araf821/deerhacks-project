@@ -1,8 +1,9 @@
+import Loader from "@/components/Loader";
 import StudyGroupCoursePicker from "@/components/StudyGroupCoursePicker";
 import { port } from "@/lib/font";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import React from "react";
+import React, { Suspense } from "react";
 
 const StudyGroupsPage = () => {
   return (
@@ -31,7 +32,9 @@ const StudyGroupsPage = () => {
         </div>
       </div>
 
-      <StudyGroupCoursePicker />
+      <Suspense fallback={<Loader />}>
+        <StudyGroupCoursePicker />
+      </Suspense>
     </div>
   );
 };

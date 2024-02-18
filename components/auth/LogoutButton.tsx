@@ -8,7 +8,7 @@ interface LogoutButtonProps {
 
 const LogoutButton = ({ className }: LogoutButtonProps) => {
   return (
-    <button onClick={() => signOut()} className={className}>
+    <button onClick={() => signOut({ callbackUrl: "/" })} className={className}>
       Logout
     </button>
   );

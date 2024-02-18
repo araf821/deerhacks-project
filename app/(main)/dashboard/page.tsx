@@ -2,6 +2,8 @@ import { port } from "@/lib/font";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import UserDashboard from "./_components/UserDashboard";
+import Loader from "@/components/Loader";
+import { Suspense } from "react";
 
 const DashboardPage = () => {
   return (
@@ -27,7 +29,9 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      <UserDashboard />
+      <Suspense fallback={<Loader />}>
+        <UserDashboard />
+      </Suspense>
     </div>
   );
 };
