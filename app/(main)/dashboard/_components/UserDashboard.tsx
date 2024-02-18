@@ -7,6 +7,7 @@ import Link from "next/link";
 import UserCourses from "./UserCourses";
 import AddSocialLink from "@/components/modals/AddSocialLink";
 import { ExternalLink } from "lucide-react";
+import { CourseNameAndStudentData } from "@/types/types";
 
 interface UserDashboardProps {}
 
@@ -23,20 +24,26 @@ const UserDashboard = async ({}: UserDashboardProps) => {
     },
   });
 
-  const coursesInfo = await db.course.findMany({
-    where: {
-      OR:user?.courses.map((course)=>{
-        return {
-          id:{
-            equals:course.courseId
-          }
-        }
-      })
-    }
-  })
-
   if (!user) {
     return null;
+  }
+  let userDataArr: CourseNameAndStudentData[] = []
+  for(let i=0; i<user.courses.length; i++){
+    let course = await db.course.findUnique({
+      where:{
+        id:user.courses[i].courseId
+      }
+    })
+    if(!course){
+      throw new Error("Course does not exist")
+    }
+
+    userDataArr.push({
+      studentData: user.courses[i],
+      name: course?.name,
+      school:course?.school,
+      courseCode:course?.courseCode
+    })
   }
 
   return (
@@ -107,7 +114,7 @@ const UserDashboard = async ({}: UserDashboardProps) => {
           </ul>
         </div>
       </div>
-      <UserCourses courses={user.courses} />
+      <UserCourses courses={userDataArr} />
     </div>
   );
 };

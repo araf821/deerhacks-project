@@ -19,7 +19,7 @@ export default auth((req) => {
     return;
   }
 
-  if (!isLoggedIn && !isPublicRoute) {
+  if (!isLoggedIn && !isPublicRoute && nextUrl.pathname !== "/test-path") {
     return Response.redirect(new URL("/auth/login", nextUrl));
   }
 
