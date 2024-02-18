@@ -30,13 +30,7 @@ const NavLinks = ({}: NavLinksProps) => {
       >
         <Link href="/study-groups">Study Groups</Link>
       </li>
-      <li
-        className={cn(
-          " px-3",
-          pathname.includes("study-group") &&
-            "rounded-full bg-orange-600 py-1.5 font-medium text-white",
-        )}
-      >
+      <li className={cn("px-3")}>
         <LogoutButton />
       </li>
     </ul>

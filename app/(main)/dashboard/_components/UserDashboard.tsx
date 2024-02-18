@@ -27,23 +27,25 @@ const UserDashboard = async ({}: UserDashboardProps) => {
   if (!user) {
     return null;
   }
-  let userDataArr: CourseNameAndStudentData[] = []
-  for(let i=0; i<user.courses.length; i++){
+
+  let userDataArr: CourseNameAndStudentData[] = [];
+  for (let i = 0; i < user.courses.length; i++) {
     let course = await db.course.findUnique({
-      where:{
-        id:user.courses[i].courseId
-      }
-    })
-    if(!course){
-      throw new Error("Course does not exist")
+      where: {
+        id: user.courses[i].courseId,
+      },
+    });
+
+    if (!course) {
+      throw new Error("Course does not exist");
     }
 
     userDataArr.push({
       studentData: user.courses[i],
       name: course?.name,
-      school:course?.school,
-      courseCode:course?.courseCode
-    })
+      school: course?.school,
+      courseCode: course?.courseCode,
+    });
   }
 
   return (
