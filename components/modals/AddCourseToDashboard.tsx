@@ -11,10 +11,6 @@ import {
 } from "../ui/dialog";
 import { cn } from "@/lib/utils";
 import { port } from "@/lib/font";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { AddSocialSchema } from "@/actions/add-social-link/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Course } from "@prisma/client";
 import { submitFunc } from "@/app/(main)/dashboard/_components/submit-func";
