@@ -2,6 +2,16 @@ import { cn } from "@/lib/utils";
 import NavLinks from "./NavLinks";
 import { port } from "@/lib/font";
 import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
+import { MenuSquare } from "lucide-react";
 
 interface NavbarProps {}
 
@@ -16,6 +26,35 @@ const Navbar = ({}: NavbarProps) => {
 
         {/* Desktop nav links */}
         <NavLinks />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger className="md:hidden" asChild>
+            <button>
+              <MenuSquare className="h-8 w-8" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuItem>
+              <Link href="/dashboard">Dashboard</Link>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem>
+              <Link href="/courses">Courses</Link>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem>
+              <Link href="/study-groups">Study Groups</Link>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem>
+              <Link href="/teacher-search">Search for Teachers</Link>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem>
+              <Link href="/learner-search">Search for Learners</Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </nav>
   );
