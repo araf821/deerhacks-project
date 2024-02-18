@@ -44,7 +44,7 @@ const OtherCoursesSidebar = async () => {
   }
 
   return (
-    <div className="w-full rounded-xl bg-[#1e1e1e] px-4 py-4 shadow-[0_0_12px] shadow-black/25 md:p-6">
+    <div className="h-fit w-full rounded-xl bg-[#1e1e1e] px-4 py-4 shadow-[0_0_12px] shadow-black/25 md:p-6 md:pb-10">
       <h2
         className={cn(
           "text-center text-2xl text-white md:text-3xl",
@@ -59,11 +59,11 @@ const OtherCoursesSidebar = async () => {
           No courses to display.
         </p>
       )}
-      <ul className="mt-6 flex flex-col items-center gap-6">
+      <ul className="mt-6 flex flex-col items-center gap-4">
         {userDataArr.map((course) => (
-          <li key={course.courseCode}>
+          <li key={course.courseCode} className="w-full">
             <Link
-              className="w-full rounded-md bg-zinc-800 px-3 py-2 text-zinc-300 transition hover:bg-zinc-700 hover:text-white"
+              className="flex w-full items-center justify-between gap-4 rounded-xl bg-zinc-800 px-3 py-2 text-zinc-400 transition-colors hover:text-white md:text-lg "
               href={`/study-groups/${course.courseId}`}
             >
               {course.name}

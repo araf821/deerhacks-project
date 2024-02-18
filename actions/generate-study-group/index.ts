@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { delay } from "@/lib/utils";
 
 export const generateStudyGroup = async (courseId: string, userId: string) => {
-  await delay(3000);
+  await delay(1500); // Just to make the user think that we're doing some crazy calculations to bring them the results
 
   const enrolledUsers = await db.studentCourseStatus.findMany({
     where: {
@@ -14,7 +14,11 @@ export const generateStudyGroup = async (courseId: string, userId: string) => {
       },
     },
     include: {
-      student: true, // Include user details
+      student: {
+        include: {
+          socialLinks: true,
+        },
+      }, // Include user details
     },
   });
 

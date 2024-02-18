@@ -7,6 +7,7 @@ import { useState, useTransition } from "react";
 import { User } from "@prisma/client";
 import { toast } from "sonner";
 import Loader from "./Loader";
+import UserCard from "./UserCard";
 
 interface GroupCreatorProps {
   courseId: string;
@@ -21,9 +22,10 @@ const GroupCreator = ({ courseId }: GroupCreatorProps) => {
 
   if (users?.length) {
     return (
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
+      <ul className="grid grid-cols-1 gap-4 pb-12 pt-4 lg:grid-cols-2">
+        {users.map((u) => (
+          //@ts-ignore
+          <UserCard key={u.id} user={u} />
         ))}
       </ul>
     );

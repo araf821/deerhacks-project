@@ -11,6 +11,7 @@ export default async function Home() {
         alt="landing page background"
         sizes="100vw"
         fill
+        priority
         className="-z-10 object-cover"
         src={"/landing.webp"}
       />
