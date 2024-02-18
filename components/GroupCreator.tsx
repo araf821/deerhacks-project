@@ -31,6 +31,15 @@ const GroupCreator = ({ courseId }: GroupCreatorProps) => {
     );
   }
 
+  if (users?.length === 0) {
+    return (
+      <p className="mt-4 text-zinc-800 lg:text-lg">
+        This course appears to not have any students at the moment. Please check
+        back later!
+      </p>
+    );
+  }
+
   if (isPending) {
     return <Loader />;
   }
@@ -45,6 +54,11 @@ const GroupCreator = ({ courseId }: GroupCreatorProps) => {
           startTransition(async () => {
             await generateStudyGroup(courseId, user.id!)
               .then((data) => {
+                if (data.length === 0) {
+                  toast.error(
+                    "Hmmmm... Looks like there are no students available.",
+                  );
+                }
                 toast.success("Good luck on your studies!");
                 setUsers(data);
               })
