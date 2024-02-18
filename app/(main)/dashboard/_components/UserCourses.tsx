@@ -1,13 +1,23 @@
+'use client'
 import { port } from "@/lib/font";
 import { cn } from "@/lib/utils";
 import { CourseNameAndStudentData } from "@/types/types";
 import Link from "next/link";
+import { useState } from "react";
+import { Course, GRADE } from "@prisma/client";
 
+import { submitFunc } from "./submit-func";
 interface UserCoursesProps {
   courses: CourseNameAndStudentData[];
+  selectableCourses: Course[]
+  user: string
 }
 
-const UserCourses = ({ courses }: UserCoursesProps) => {
+const UserCourses = ({ courses, selectableCourses, user}: UserCoursesProps) => {
+
+
+  const [addingNewCourse, setAddingNewCourse] = useState(false)
+  console.log(selectableCourses)
   return (
     <div className="md:col-span-2">
       <p
@@ -43,9 +53,44 @@ const UserCourses = ({ courses }: UserCoursesProps) => {
           }
         })}
         <li>
-          <button className="flex aspect-[21/9] h-full w-full flex-col items-center justify-center gap-1.5 rounded-xl bg-[#1e1e1e] px-4 py-2.5 text-2xl text-zinc-400 transition-colors hover:text-white">
-            Add Course
-          </button>
+          {!addingNewCourse ?
+            <button onClick={() => { setAddingNewCourse(true) }} className="flex aspect-[21/9] h-full w-full flex-col items-center justify-center gap-1.5 rounded-xl bg-[#1e1e1e] px-4 py-2.5 text-2xl text-zinc-400 transition-colors hover:text-white">
+              Add Course
+            </button>
+            :
+            <div className="flex aspect-[21/9] w-full flex-col items-center justify-center gap-1.5 rounded-xl bg-[#1e1e1e] px-4 py-2.5 text-2xl text-zinc-400 transition-colors">
+              <form action={async (formData: FormData)=>{
+                await submitFunc(formData, user)
+
+              }}>
+                <label htmlFor="selectedCourse">Course</label>
+                <select id="selectedCourse" name="selectedCourse">
+                <option disabled selected value={""}> select an option </option>
+                  {selectableCourses.map((course)=>{
+                    return <option key={course.id} value={course.id}>{course.courseCode}</option>
+                  })}
+                </select>
+                <label htmlFor="studentType">Student Type</label>
+                <select id="studentType" name="studentType" style={{textOverflow:"ellipsis", width:"200px"}}>
+                    <option disabled selected value={""}> select an option </option>
+                    <option value={"TEACHER"}>{"Teacher: You're confident about your skills and want to help others"}</option>
+                    <option value={"LEARNER"}>{"Learner: You're here to get home help from others"}</option>
+                    <option value={"NEITHER"}>{"Neither"}</option>
+                </select>
+                <label htmlFor="grade">Grade</label>
+                <select id="grade" name="grade" >
+                    <option disabled selected value={""}> select an option </option>
+                    <option value={"A"}>A</option>
+                    <option value={"B"}>B</option>
+                    <option value={"C"}>C</option>
+                    <option value={"D"}>D</option>
+                    <option value={"N/A"}>Prefer not to say</option>
+                </select>
+                <button type="submit" className="hover:text-white">Add course</button>
+              </form>
+              <button className="hover:text-red-700" onClick={()=>{setAddingNewCourse(false)}}>Cancel</button>
+            </div>
+          }
         </li>
       </ul>
 

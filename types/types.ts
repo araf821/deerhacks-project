@@ -4,6 +4,7 @@ export interface CourseNameAndStudentData{
     name: string
     school: string
     courseCode: string
+    courseId: string
 }
 export interface StudentCourseData{
     completionStatus: COMPLETION_STATUS

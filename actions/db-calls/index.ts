@@ -49,6 +49,16 @@ export const addStudentCourses = async (studentCourseData: StudentCourseData[]) 
     })
 }
 
+export const addCourse = async (school: string, name:string, courseCode:string, )=>{
+    await db.course.create({
+        data:{
+            school:school,
+            name:name,
+            courseCode:courseCode
+        }
+    })
+}
+
 
 export const updateStudentCourses = async (id: string, newType:StudentCourseDataUpdate) => {
     await db.studentCourseStatus.update({
