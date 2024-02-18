@@ -55,7 +55,7 @@ const OtherCoursesSidebar = async ({
           port.className,
         )}
       >
-        Other Courses
+        My Courses
       </h2>
       <hr className="mt-2 border-t-2 border-zinc-700" />
       {!userDataArr.length && (
