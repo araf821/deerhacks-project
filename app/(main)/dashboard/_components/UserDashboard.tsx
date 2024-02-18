@@ -51,7 +51,7 @@ const UserDashboard = async ({}: UserDashboardProps) => {
   return (
     <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-8 md:grid-cols-3 md:gap-8 lg:gap-12">
       <div className="col-span-1 shrink-0 space-y-4">
-        <div className="rounded-xl bg-[#1e1e1e] px-4 py-6 md:px-6 md:py-10">
+        <div className="rounded-xl bg-[#1e1e1e] px-4 py-6 shadow-[0_0_12px] shadow-black/50 md:px-6 md:py-10">
           <div className="relative mx-auto aspect-square w-32 rounded-full border-2 border-white">
             <Image
               alt="user profile picture"
@@ -79,11 +79,11 @@ const UserDashboard = async ({}: UserDashboardProps) => {
             </p>
             <hr className="mt-2 border-t-2 border-zinc-800" />
             <p className="mt-4 text-zinc-200">
-              {user.bio || "Start writing about yourself..."}
+              {user.bio || "Tell us about yourself..."}
             </p>
           </div>
         </div>
-        <div className="rounded-xl bg-[#1e1e1e] p-4 md:p-6">
+        <div className="rounded-xl bg-[#1e1e1e] p-4 shadow-[0_0_12px] shadow-black/50 md:p-6">
           <p
             className={cn(
               "text-center text-2xl text-white md:text-3xl",

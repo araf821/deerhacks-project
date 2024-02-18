@@ -16,7 +16,7 @@ const StudyGroupCourses = async ({}: StudyGroupCoursesProps) => {
   const courses = await db.course.findMany({
     where: {
       StudentCourseStatus: {
-        every: {
+        some: {
           userId: user.id,
         },
       },
@@ -39,7 +39,7 @@ const StudyGroupCourses = async ({}: StudyGroupCoursesProps) => {
   return (
     <ul
       className={cn(
-        "mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
+        "mt-4 grid grid-cols-1 gap-4 min-[500px]:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-4",
         port.className,
       )}
     >

@@ -12,7 +12,7 @@ const UserCourses = ({ courses }: UserCoursesProps) => {
     <div className="md:col-span-2">
       <p
         className={cn(
-          "rounded-xl bg-[#1e1e1e] px-3 py-2 text-xl text-white md:text-2xl",
+          "rounded-xl bg-[#1e1e1e] px-3 py-2 text-xl text-white shadow-xl md:text-2xl",
           port.className,
         )}
       >
@@ -51,7 +51,7 @@ const UserCourses = ({ courses }: UserCoursesProps) => {
 
       <p
         className={cn(
-          "mt-8 rounded-xl bg-[#1e1e1e] px-3 py-2 text-xl text-white md:text-2xl",
+          "mt-8 rounded-xl bg-[#1e1e1e] px-3 py-2 text-xl text-white shadow-xl md:text-2xl",
           port.className,
         )}
       >

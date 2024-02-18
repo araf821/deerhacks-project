@@ -11,26 +11,26 @@ const NavLinks = ({}: NavLinksProps) => {
   const pathname = usePathname();
 
   return (
-    <ul className="flex items-center gap-4 rounded-full bg-black px-2 py-1.5 font-medium text-white shadow-xl shadow-black/25 max-md:hidden">
+    <ul className="flex items-center gap-4 rounded-full bg-black px-2 py-1.5 font-medium text-zinc-300 shadow-xl shadow-black/25 max-md:hidden">
       <li
         className={cn(
-          " px-3",
+          "px-3 hover:text-white",
           pathname.includes("dashboard") &&
-            "rounded-full bg-orange-600 py-1.5 font-medium text-white",
+            "rounded-full bg-orange-600 py-1.5 font-medium text-black hover:text-black",
         )}
       >
         <Link href="/dashboard">Dashboard</Link>
       </li>
       <li
         className={cn(
-          " px-3",
+          "px-3 hover:text-white",
           pathname.includes("study-group") &&
-            "rounded-full bg-orange-600 py-1.5 font-medium text-white",
+            "rounded-full bg-orange-600 py-1.5 font-medium text-black hover:text-black",
         )}
       >
         <Link href="/study-groups">Study Groups</Link>
       </li>
-      <li className={cn("px-3")}>
+      <li className={cn("px-3 hover:text-white")}>
         <LogoutButton />
       </li>
     </ul>
