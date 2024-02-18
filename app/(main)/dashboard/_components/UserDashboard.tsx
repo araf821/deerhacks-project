@@ -32,7 +32,7 @@ const UserDashboard = async ({}: UserDashboardProps) => {
   for (let i = 0; i < user.courses.length; i++) {
     let course = await db.course.findUnique({
       where: {
-        id: user.courses[i].courseId,
+        id: user.courses[i].id,
       },
     });
 
