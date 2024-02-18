@@ -1,0 +1,34 @@
+body {
+    background-image: url("background.png");
+    background-color: black;
+    background-blend-mode: lighten;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+  }
+
+  .center{text-align: center;
+    top:200px;
+       left:55px;
+  width: 200;
+  height: 200;
+  border: black;
+color: black;
+padding: 20px;
+column-gap: 20px;
+ column-gap: 20px;
+display: block;
+margin-left: auto;
+margin-right: auto;
+font-size: 25;
+
+  
+  }
+
+  .container {
+    display: flex;
+
+
+
+    
+  }
