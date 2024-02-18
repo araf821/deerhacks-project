@@ -14,7 +14,7 @@ export default async function Home() {
       <div className="center">
       </div><Image alt="" width={808} height={371} className="mx-auto" src={input_image} /> <div/>
       <div className="center"><LogoutButton /></div>
-      <div className="center"><button type="button">Sign Up</button> </div>
+      <div className="center"><button type="button">Sign</button> </div>
     </div>
   );
 }
