@@ -32,7 +32,7 @@ const UserDashboard = async ({}: UserDashboardProps) => {
   for (let i = 0; i < user.courses.length; i++) {
     let course = await db.course.findUnique({
       where: {
-        id: user.courses[i].id,
+        id: user.courses[i].courseId,
       },
     });
 
@@ -45,8 +45,21 @@ const UserDashboard = async ({}: UserDashboardProps) => {
       name: course?.name,
       school: course?.school,
       courseCode: course?.courseCode,
+      courseId:course?.id
     });
   }
+
+  
+  let selectableCourses = await db.course.findMany({
+    where:{
+      school:user.school,
+      NOT:userDataArr.map((studentCourseInfo)=>{
+        return {
+          id:studentCourseInfo.courseId
+        }
+      }),
+    }
+  })
 
   return (
     <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-8 md:grid-cols-3 md:gap-8 lg:gap-12">
@@ -116,7 +129,7 @@ const UserDashboard = async ({}: UserDashboardProps) => {
           </ul>
         </div>
       </div>
-      <UserCourses courses={userDataArr} />
+      <UserCourses selectableCourses={selectableCourses} courses={userDataArr} user={user.id}/>
     </div>
   );
 };

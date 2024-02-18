@@ -20,7 +20,72 @@ export const setAvailStatus = async (
     } else {
       await db.status.delete({
         where: {
-          userId: userId,
+          id: userId,
+        },
+      });
+      console.log("hello");
+      if (user) {
+        if (status === null) {
+          //@ts-ignore
+          user.currentAvailStatus = null;
+        } else {
+          await db.status.delete({
+            where: {
+              userId: userId,
+            },
+          });
+          let userStatus = await db.status.create({
+            data: {
+              userAvaibilityType: status,
+              msg: msg,
+              userId: userId,
+              courseIDs: courseIds,
+            },
+          });
+          db.user.update({
+            where: {
+              id: userId,
+            },
+            data: {
+              //@ts-ignore
+              currentAvailStatus: userStatus,
+            },
+          });
+        }
+      } else {
+        throw new Error("User does not exist.");
+      }
+    }
+
+    export const addStudentCourses = async (
+      studentCourseData: StudentCourseData[],
+    ) => {
+      await db.studentCourseStatus.createMany({
+        data: studentCourseData,
+      });
+    };
+
+    export const addCourse = async (
+      school: string,
+      name: string,
+      courseCode: string,
+    ) => {
+      await db.course.create({
+        data: {
+          school: school,
+          name: name,
+          courseCode: courseCode,
+        },
+      });
+    };
+
+    export const updateStudentCourses = async (
+      id: string,
+      newType: StudentCourseDataUpdate,
+    ) => {
+      await db.studentCourseStatus.update({
+        where: {
+          id: id,
         },
       });
       let userStatus = await db.status.create({
@@ -40,7 +105,7 @@ export const setAvailStatus = async (
           currentAvailStatus: userStatus,
         },
       });
-    }
+    };
   } else {
     throw new Error("User does not exist.");
   }

@@ -1,15 +1,15 @@
-import LogoutButton from "@/components/auth/LogoutButton";
 import input_image from "./Edumates.png";
 
 import "./style.css";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   return (
     <div>
       <div className="center"></div>
       <Image
-        alt="EduMates"
+        alt=""
         width={808}
         height={371}
         className="mx-auto"
@@ -17,10 +17,24 @@ export default async function Home() {
       />{" "}
       <div />
       <div className="center">
-        <LogoutButton />
+        <form
+          action={async () => {
+            "use server";
+            redirect("/auth/login");
+          }}
+        >
+          <button type="submit">Log in</button>
+        </form>
       </div>
       <div className="center">
-        <button type="button">Sign</button>{" "}
+        <form
+          action={async () => {
+            "use server";
+            redirect("/auth/register");
+          }}
+        >
+          <button type="submit">Sign up</button>
+        </form>
       </div>
     </div>
   );
