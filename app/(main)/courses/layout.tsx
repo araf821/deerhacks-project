@@ -31,11 +31,7 @@ const layout = ({ children }: layoutProps) => {
         </div>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 md:mt-8 md:grid-cols-2 md:gap-8 lg:mt-10 lg:grid-cols-3">
-        <OtherCoursesSidebar directory={"courses"} />
-
-        <div className="lg:col-span-2">{children}</div>
-      </div>
+      {children}
     </div>
   );
 };
