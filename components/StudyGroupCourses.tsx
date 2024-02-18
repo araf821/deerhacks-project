@@ -49,7 +49,7 @@ const StudyGroupCourses = async ({}: StudyGroupCoursesProps) => {
           className="flex aspect-[21/9] flex-col justify-center gap-1.5 rounded-xl bg-[#1e1e1e] px-4 py-2.5"
         >
           <Link
-            href={`/course/${course.id}`}
+            href={`/courses/${course.id}`}
             className="text-2xl font-semibold text-white"
           >
             {course.courseCode}

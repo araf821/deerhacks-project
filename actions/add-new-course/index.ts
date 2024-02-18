@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { z } from "zod";
 import { AddNewCourseSchema } from "./schema";
+import { revalidatePath } from "next/cache";
 
 export const addNewCourse = async (
   values: z.infer<typeof AddNewCourseSchema>,
@@ -43,7 +44,12 @@ export const addNewCourse = async (
         error: `Course with the course code ${courseCode} already exists.`,
       };
     }
+
+    return {
+      error: "Something went wrong, please try again later.",
+    };
   }
 
+  revalidatePath("/courses");
   return { success: `${courseCode} was added as a course!` };
 };

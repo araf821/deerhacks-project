@@ -1,8 +1,18 @@
-import NextAuth from "next-auth";
+import NextAuth, { DefaultSession } from "next-auth";
 import authConfig from "./auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getUserById } from "./lib/data/user";
 import { db } from "./lib/db";
+
+export type ExtendedUser = DefaultSession["user"] & {
+  school: String;
+};
+
+declare module "next-auth" {
+  interface Session {
+    user: ExtendedUser;
+  }
+}
 
 export const {
   handlers: { GET, POST },
@@ -28,6 +38,7 @@ export const {
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.image = token.picture;
+        session.user.school = token.school as string;
       }
 
       return session;
@@ -43,6 +54,7 @@ export const {
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.picture = existingUser.imageUrl;
+      token.school = existingUser.school;
 
       return token;
     },

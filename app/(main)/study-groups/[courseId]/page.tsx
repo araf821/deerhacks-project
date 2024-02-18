@@ -1,6 +1,12 @@
 import React from "react";
 
-const StudyGroupSetup = () => {
+interface Props {
+  params: {
+    courseId: string;
+  };
+}
+
+const StudyGroupSetup = ({ params }: Props) => {
   return <div>StudyGroupSetup</div>;
 };
 

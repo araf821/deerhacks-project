@@ -24,6 +24,15 @@ const NavLinks = ({}: NavLinksProps) => {
       <li
         className={cn(
           "px-3 hover:text-white",
+          pathname.includes("courses") &&
+            "rounded-full bg-orange-600 py-1.5 font-medium text-black hover:text-black",
+        )}
+      >
+        <Link href="/courses">Courses</Link>
+      </li>
+      <li
+        className={cn(
+          "px-3 hover:text-white",
           pathname.includes("study-group") &&
             "rounded-full bg-orange-600 py-1.5 font-medium text-black hover:text-black",
         )}
