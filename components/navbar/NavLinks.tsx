@@ -39,6 +39,24 @@ const NavLinks = ({}: NavLinksProps) => {
       >
         <Link href="/study-groups">Study Groups</Link>
       </li>
+      <li
+        className={cn(
+          "px-3 hover:text-white",
+          pathname.includes("teacher-search") &&
+            "rounded-full bg-orange-600 py-1.5 font-medium text-black hover:text-black",
+        )}
+      >
+        <Link href="/teacher-search">Search for Teachers</Link>
+      </li>
+      <li
+        className={cn(
+          "px-3 hover:text-white",
+          pathname.includes("learner-search") &&
+            "rounded-full bg-orange-600 py-1.5 font-medium text-black hover:text-black",
+        )}
+      >
+        <Link href="/learner-search">Search for Learners</Link>
+      </li>
       <li className={cn("px-3 hover:text-white")}>
         <LogoutButton />
       </li>

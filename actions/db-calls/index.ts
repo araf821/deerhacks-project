@@ -1,3 +1,4 @@
+'use server'
 import { db } from "@/lib/db";
 import { StudentCourseData, StudentCourseDataUpdate } from "@/types/types";
 import { STUDENT_TYPE, USER_AVAILABILITY_TYPE } from "@prisma/client";
@@ -13,31 +14,38 @@ export const setAvailStatus = async (
     },
   });
   console.log("hello");
-  if (user) {
-    if (status === null) {
-      //@ts-ignore
-      user.currentAvailStatus = null;
-    } else {
-      await db.status.delete({
+  if(await db.status.findFirst({
+    where:{
+        userId:userId
+    }
+})){
+    await db.status.delete({
         where: {
           userId: userId,
         },
       });
+}
+
+  if (user) {
+    if (status === null) {
+      //@ts-ignore
+      user.currentAvailStatus = null;
+      await db.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          //@ts-ignore
+          currentAvailStatus: undefined,
+        },
+      });
+    } else {
       let userStatus = await db.status.create({
         data: {
           userAvaibilityType: status,
           msg: msg,
           userId: userId,
           courseIDs: courseIds,
-        },
-      });
-      db.user.update({
-        where: {
-          id: userId,
-        },
-        data: {
-          //@ts-ignore
-          currentAvailStatus: userStatus,
         },
       });
     }
@@ -82,16 +90,26 @@ export const updateStudentCourses = async (
   });
 };
 
-export const getStatuses = async (
-  courseId: string,
-  userAvaibilityType: USER_AVAILABILITY_TYPE,
-) => {
-  return await db.status.findMany({
-    where: {
-      courseIDs: {
-        hasSome: [courseId],
-      },
-      userAvaibilityType: userAvaibilityType,
-    },
-  });
-};
+export const getStatuses = async (courseId: string, userAvaibilityType: USER_AVAILABILITY_TYPE) => {
+    let res1 = await db.status.findMany({
+        where: {
+            courseIDs: {
+                has:courseId
+            },
+            userAvaibilityType: userAvaibilityType
+        }
+    })
+    let arr = []
+    for(const i of res1){
+        arr.push({user:await db.user.findFirst({
+            where:{
+                id:i.userId
+            }
+        }), status:i, socialLinks:await db.social.findMany({
+            where:{
+                userId:i.userId
+            }
+        })})
+    }
+    return arr
+}

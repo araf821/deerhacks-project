@@ -4,21 +4,38 @@ import { cn } from "@/lib/utils";
 import { CourseNameAndStudentData } from "@/types/types";
 import Link from "next/link";
 import { useState } from "react";
-import { Course, GRADE } from "@prisma/client";
-
+import { Course, GRADE, Status } from "@prisma/client";
+import SetStatusModal from "@/components/modals/SetStatus"
 import { submitFunc } from "./submit-func";
 import AddCourseToDashboard from "@/components/modals/AddCourseToDashboard";
 interface UserCoursesProps {
   courses: CourseNameAndStudentData[];
   selectableCourses: Course[];
-  user: string;
+  status: Status | null
+  statusCourse: string | undefined
 }
 
 const UserCourses = ({
   courses,
   selectableCourses,
-  user,
+  status,
+  statusCourse
 }: UserCoursesProps) => {
+  let availText: string | null = null;
+  if (status) {
+    if (status.userAvaibilityType === "AVAILABLE_TO_HELP_IRL") {
+      availText = "Available to help in-person"
+    }
+    if (status.userAvaibilityType === "LOOKING_FOR_HELP_IRL") {
+      availText = "Looking for help in-person"
+    }
+    if (status.userAvaibilityType === "AVAILABLE_TO_HELP_ONLINE") {
+      availText = "Available to help online"
+    }
+    if (status.userAvaibilityType === "LOOKING_FOR_HELP_ONLINE") {
+      availText = "Looking for help online"
+    }
+  }
   return (
     <div className="md:col-span-2">
       <p
@@ -100,6 +117,37 @@ const UserCourses = ({
               Add Course
             </button>
           </AddCourseToDashboard>
+        </li>
+      </ul>
+      <p
+        className={cn(
+          "mt-8 rounded-xl bg-[#1e1e1e] px-3 py-2 text-xl text-white shadow-xl md:text-2xl",
+          port.className,
+        )}
+      >
+        Current Status
+      </p>
+      <ul
+        className={cn(
+          "mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6",
+          port.className,
+        )}
+      >
+        {availText? 
+        <li
+          className="flex aspect-[21/9] flex-col justify-center gap-1.5 rounded-xl bg-[#1e1e1e] px-4 py-2.5"
+        >
+          <p className="truncate text-xl text-zinc-400 text-wrap">{statusCourse}: {availText}</p>
+        </li>
+        :
+        null
+        }
+        <li>
+          <SetStatusModal selectableCourses={courses}>
+            <button className="flex aspect-[21/9] h-full w-full shrink-0 flex-col items-center justify-center gap-1.5 rounded-xl bg-[#1e1e1e] px-4 py-2.5 text-2xl text-zinc-400 transition-colors hover:text-white">
+              Set Status
+            </button>
+          </SetStatusModal >
         </li>
       </ul>
     </div>

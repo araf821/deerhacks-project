@@ -28,6 +28,18 @@ const UserDashboard = async ({}: UserDashboardProps) => {
     return null;
   }
 
+  const userStatus = await db.status.findUnique({
+    where:{
+      userId:user.id
+    }
+  })
+
+  const statusCourse = await db.course.findFirst({
+    where:{
+      id:userStatus?.courseIDs[0]
+    }
+  })
+
   let userDataArr: CourseNameAndStudentData[] = [];
   for (let i = 0; i < user.courses.length; i++) {
     let course = await db.course.findUnique({
@@ -131,7 +143,8 @@ const UserDashboard = async ({}: UserDashboardProps) => {
       <UserCourses
         selectableCourses={selectableCourses}
         courses={userDataArr}
-        user={user.id}
+        status={userStatus}
+        statusCourse={statusCourse?.courseCode}
       />
     </div>
   );

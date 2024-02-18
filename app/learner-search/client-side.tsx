@@ -29,9 +29,9 @@ export default function TeacherSearchClient(props: Props) {
     },[selectedCourse, selectedLocation])
     return (
         <div style={{marginTop:"75px", display:"flex", alignItems:"center", flexDirection:"column"}}>
-             <h2 style={{fontSize:"100px", marginBottom:"25px"}}>Teacher Search</h2>
-             <h2 style={{fontSize:"20px", marginBottom:"25px"}}>Select a course which you&apos;re a learner for, and your desired location (in-person on campus vs. online) 
-             to find someone available to help you!</h2>
+             <h2 style={{fontSize:"100px", marginBottom:"25px"}}>Learner Search</h2>
+             <h2 style={{fontSize:"20px", marginBottom:"25px"}}>Select a course which you&apos;re a teacher for, and your desired location (in-person on campus vs. online) 
+             to find someone you can help!</h2>
             <div style={{ display: "flex", width: "100vw", paddingLeft:"50px", paddingTop:"25px" }}>
             <form style={{display:"flex", columnGap:"50px"}} action={async (formData: FormData)=>{
                 let courseId = formData.get("selectedCourse")
@@ -40,9 +40,9 @@ export default function TeacherSearchClient(props: Props) {
                 if(typeof courseId === "string"){
                     let res = null
                     if(availability === "In-person"){
-                        res = await getStatuses(courseId, "AVAILABLE_TO_HELP_IRL")
+                        res = await getStatuses(courseId, "LOOKING_FOR_HELP_IRL")
                     } else{
-                        res = await getStatuses(courseId, "AVAILABLE_TO_HELP_ONLINE")
+                        res = await getStatuses(courseId, "LOOKING_FOR_HELP_ONLINE")
                     }
                     //@ts-ignore
                     setRelevantStauses(res)

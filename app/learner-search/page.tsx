@@ -20,7 +20,7 @@ export default async function TeacherSearchLayout() {
         const userCourseInfo = (await db.studentCourseStatus.findMany({
             where:{
                 userId:userInfo.id,
-                type:"LEARNER"
+                type:"TEACHER"
             }
         }))
         const userCourses: Course[] = await db.course.findMany({
