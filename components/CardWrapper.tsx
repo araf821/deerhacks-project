@@ -3,9 +3,14 @@ import { cn } from "@/lib/utils";
 interface CardWrapperProps {
   children: React.ReactNode;
   size?: "sm" | "md" | "lg" | "xl";
+  className?: string;
 }
 
-const CardWrapper = ({ children, size = "md" }: CardWrapperProps) => {
+const CardWrapper = ({
+  children,
+  size = "md",
+  className,
+}: CardWrapperProps) => {
   return (
     <div
       className={cn(
@@ -14,6 +19,7 @@ const CardWrapper = ({ children, size = "md" }: CardWrapperProps) => {
           "max-w-sm": size === "sm",
           "max-w-lg": size === "lg",
           "max-w-xl": size === "xl",
+          className,
         },
       )}
     >
