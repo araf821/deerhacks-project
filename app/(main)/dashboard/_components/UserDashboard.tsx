@@ -45,21 +45,20 @@ const UserDashboard = async ({}: UserDashboardProps) => {
       name: course?.name,
       school: course?.school,
       courseCode: course?.courseCode,
-      courseId:course?.id
+      courseId: course?.id,
     });
   }
 
-  
   let selectableCourses = await db.course.findMany({
-    where:{
-      school:user.school,
-      NOT:userDataArr.map((studentCourseInfo)=>{
+    where: {
+      school: user.school,
+      NOT: userDataArr.map((studentCourseInfo) => {
         return {
-          id:studentCourseInfo.courseId
-        }
+          id: studentCourseInfo.courseId,
+        };
       }),
-    }
-  })
+    },
+  });
 
   return (
     <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-8 md:grid-cols-3 md:gap-8 lg:gap-12">
@@ -129,7 +128,11 @@ const UserDashboard = async ({}: UserDashboardProps) => {
           </ul>
         </div>
       </div>
-      <UserCourses selectableCourses={selectableCourses} courses={userDataArr} user={user.id}/>
+      <UserCourses
+        selectableCourses={selectableCourses}
+        courses={userDataArr}
+        user={user.id}
+      />
     </div>
   );
 };
