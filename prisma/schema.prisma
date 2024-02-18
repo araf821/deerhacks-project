@@ -87,7 +87,7 @@ model Course {
   id                   String                @id @default(auto()) @map("_id") @db.ObjectId
   school               String
   name                 String
-  courseCode           String
+  courseCode           String                @unique
   StudentCourseStatus  StudentCourseStatus[]
   statusIDs            String[]              @db.ObjectId
   statuses             Status[]              @relation(fields: [statusIDs], references: [id])
