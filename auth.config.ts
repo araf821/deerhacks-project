@@ -6,6 +6,7 @@ import { getUserByEmail } from "./lib/data/user";
 import bcrypt from "bcryptjs";
 
 export default {
+  trustHost: true,
   providers: [
     Credentials({
       async authorize(credentials) {

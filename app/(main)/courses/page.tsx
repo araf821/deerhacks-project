@@ -1,17 +1,17 @@
+import CourseList from "@/components/CourseList";
+import Loader from "@/components/Loader";
 import { port } from "@/lib/font";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import UserDashboard from "./_components/UserDashboard";
-import Loader from "@/components/Loader";
 import { Suspense } from "react";
 
-const DashboardPage = () => {
+const CoursesPage = () => {
   return (
     <div className="mx-auto w-full max-w-screen-xl py-12 max-2xl:px-4">
       <div className="relative aspect-video w-full rounded-2xl shadow-[0_0_12px] shadow-black/50 md:aspect-[24/9]">
         <Image
           alt="dashboard"
-          src="/cat-medi.svg"
+          src="/cat-grad.webp"
           fill
           priority
           sizes="(max-width: 768px) 100vw, 75vw"
@@ -24,15 +24,15 @@ const DashboardPage = () => {
               port.className,
             )}
           >
-            Dashboard
+            Courses
           </p>
         </div>
       </div>
 
       <Suspense fallback={<Loader />}>
-        <UserDashboard />
+        <CourseList />
       </Suspense>
     </div>
   );
 };
-export default DashboardPage;
+export default CoursesPage;

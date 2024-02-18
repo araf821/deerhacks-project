@@ -100,7 +100,7 @@ const AddSocialLink = ({ children }: AddSocialLinkProps) => {
             <hr className="border-t-4 border-zinc-800" />
             <Button
               disabled={isPending}
-              className="w-full bg-[#FF9900] text-lg font-semibold text-black"
+              className="w-full bg-[#FF9900] text-lg font-semibold text-black hover:bg-amber-600"
             >
               ADD LINK
             </Button>

@@ -1,17 +1,17 @@
+import Loader from "@/components/Loader";
+import StudyGroupCoursePicker from "@/components/StudyGroupCoursePicker";
 import { port } from "@/lib/font";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import UserDashboard from "./_components/UserDashboard";
-import Loader from "@/components/Loader";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 
-const DashboardPage = () => {
+const StudyGroupsPage = () => {
   return (
     <div className="mx-auto w-full max-w-screen-xl py-12 max-2xl:px-4">
       <div className="relative aspect-video w-full rounded-2xl shadow-[0_0_12px] shadow-black/50 md:aspect-[24/9]">
         <Image
           alt="dashboard"
-          src="/cat-medi.svg"
+          src="/cat-group.webp"
           fill
           priority
           sizes="(max-width: 768px) 100vw, 75vw"
@@ -24,15 +24,19 @@ const DashboardPage = () => {
               port.className,
             )}
           >
-            Dashboard
+            Study Groups
+          </p>
+          <p className="text-zinc-200 max-md:text-sm md:mt-2 lg:text-lg">
+            Find others to study with!
           </p>
         </div>
       </div>
 
       <Suspense fallback={<Loader />}>
-        <UserDashboard />
+        <StudyGroupCoursePicker />
       </Suspense>
     </div>
   );
 };
-export default DashboardPage;
+
+export default StudyGroupsPage;
