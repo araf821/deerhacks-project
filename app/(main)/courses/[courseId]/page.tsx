@@ -1,6 +1,6 @@
-import { port } from "@/lib/font";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
+import Loader from "@/components/Loader";
+import SinglePostPage from "@/components/SinglePostPage";
+import { Suspense } from "react";
 
 interface pageProps {
   params: {
@@ -9,7 +9,11 @@ interface pageProps {
 }
 
 const page = ({ params }: pageProps) => {
-  return <div></div>;
+  return (
+    <Suspense fallback={<Loader />}>
+      <SinglePostPage courseId={params.courseId} />
+    </Suspense>
+  );
 };
 
 export default page;

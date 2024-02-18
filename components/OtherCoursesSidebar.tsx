@@ -5,7 +5,11 @@ import { CourseNameAndStudentData } from "@/types/types";
 import { auth } from "@/auth";
 import Link from "next/link";
 
-const OtherCoursesSidebar = async () => {
+const OtherCoursesSidebar = async ({
+  directory = "study-groups",
+}: {
+  directory?: "courses" | "study-groups";
+}) => {
   const session = await auth();
 
   const user = await db.user.findUnique({
@@ -64,7 +68,11 @@ const OtherCoursesSidebar = async () => {
           <li key={course.courseCode} className="w-full">
             <Link
               className="flex w-full items-center justify-between gap-4 rounded-xl bg-zinc-800 px-3 py-2 text-zinc-400 transition-colors hover:text-white md:text-lg "
-              href={`/study-groups/${course.courseId}`}
+              href={
+                directory === "study-groups"
+                  ? `/study-groups/${course.courseId}`
+                  : `/courses/${course.courseId}`
+              }
             >
               {course.name}
             </Link>
