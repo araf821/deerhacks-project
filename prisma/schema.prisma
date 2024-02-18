@@ -21,6 +21,8 @@ model User {
   socialLinks        Social[]
   courses            StudentCourseStatus[]
   currentAvailStatus Status?
+  reviewsGiven       Review[]              @relation("studentRelation")
+  reviews            Review[]              @relation("teacherRelation")
 }
 
 enum USER_AVAILABILITY_TYPE {
@@ -78,7 +80,7 @@ model StudentCourseStatus {
   course           Course            @relation(fields: [courseId], references: [id])
   student          User              @relation(fields: [userId], references: [id])
   userId           String            @db.ObjectId
-  courseId         String            @unique @db.ObjectId 
+  courseId         String            @unique @db.ObjectId
 }
 
 model Course {
@@ -89,13 +91,19 @@ model Course {
   StudentCourseStatus StudentCourseStatus[]
   statusIDs           String[]              @db.ObjectId
   statuses            Status[]              @relation(fields: [statusIDs], references: [id])
+  reviewIDs           String[]              @db.ObjectId
+  reviews             Review[]              @relation(fields: [reviewIDs], references: [id], "reviews")
 }
 
-// model Review {
-//   student    User   @relation(fields: [userId], references: [id])
-//   teacher    User   @relation(fields: [userId], references: [id])
-//   reviewText String
-//   ratingNum  Int
-//   course     Course @relation(fields: [courseId], references: [id])
-//   courseId   String @db.ObjectId
-// }
+model Review {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  student    User     @relation(fields: [studentId], references: [id], name: "studentRelation")
+  teacher    User     @relation(fields: [teacherId], references: [id], name: "teacherRelation")
+  reviewText String
+  ratingNum  Int
+  courses    Course[] @relation(fields: [courseIDs], references: [id], "reviews")
+  courseIDs  String[] @db.ObjectId
+  teacherId  String   @db.ObjectId
+  studentId  String   @db.ObjectId
+  @@unique (name: "studentAndTeacher", [studentId, teacherId])
+}
